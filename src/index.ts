@@ -17,6 +17,7 @@ app.use(express.json());
 
 app.use(errorMiddleware);
 
-app.listen(3001, "0.0.0.0", () => console.log("Listening on port http://localhost:3001"));
+
+app.listen(Number(process.env.APP_PORT), "0.0.0.0", () => console.log(`Listening on port http://localhost:${process.env.APP_PORT}`));
 
 

@@ -1,20 +1,22 @@
-import {Column, Entity, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn} from "typeorm";
-
+import {Column, Entity, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, BaseEntity} from "typeorm";
 
 
 @Entity('users')
-class User {
+class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
-    id:string;
+    id: string;
 
-    @Column({unique: true, length: 320 })
+    @Column({unique: true, length: 320})
     email: string;
 
     @Column({length: 100})
-    username: string;
+    name: string;
 
-    @Column({length:100})
+    @Column({length: 150})
     password: string;
+
+    @Column({length: 64})
+    salt:string
 
     @CreateDateColumn({type: "timestamp"})
     created_at: Date
@@ -24,4 +26,4 @@ class User {
 }
 
 
-export {User}
+export {User};

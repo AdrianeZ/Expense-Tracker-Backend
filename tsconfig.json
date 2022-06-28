@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "typeRoots": ["./src/types"]
+    "typeRoots": ["./src/types/config/environment.d.ts"]
 
   },
   "exclude": [

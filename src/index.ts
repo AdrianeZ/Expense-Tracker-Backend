@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
-import "express-async-errors";
+import 'express-async-errors';
 import rateLimit from "express-rate-limit";
-import {errorMiddleware} from "./middlewares/error-middleware"
-import {connectToDatabase} from "./database/create-connection";
+import {errorMiddleware} from "./middlewares/errorMiddleware"
+import {connectToDatabase} from "./database/createConnection";
 import {authRouter} from "./routers/AuthRouter";
 
 const app = express();
@@ -17,11 +17,11 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use(errorMiddleware);
-
 connectToDatabase().then(() => console.log("connected to database successfully"));
 
-app.use("/api/register", authRouter);
+app.use("/api", authRouter);
+
+app.use(errorMiddleware);
 
 app.listen(Number(process.env.APP_PORT), "0.0.0.0", () => console.log(`Listening on port http://localhost:${process.env.APP_PORT}`));
 

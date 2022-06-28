@@ -11,7 +11,7 @@ const connectToDatabase = async () => {
             port: Number(process.env.DB_PORT),
             username: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
-            entities:[`${dirname(__dirname)}/entities/*.ts`],
+            entities:[`${dirname(__dirname)}/entities/{*.ts,*.js}`],
             synchronize: true
         }
     )

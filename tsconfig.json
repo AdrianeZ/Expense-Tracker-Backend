@@ -6,12 +6,16 @@
     "preserveConstEnums": true,
     "outDir": "build",
     "downlevelIteration": true,
-    "lib": ["es6"],
+    "lib": [
+      "es6"
+    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "typeRoots": ["./src/types/config/environment.d.ts"]
-
+    "typeRoots": [
+      "./src/types/config/environment.d.ts",
+      "./src/@types/"
+    ]
   },
   "exclude": [
     "node_modules"

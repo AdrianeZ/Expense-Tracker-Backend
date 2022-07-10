@@ -1,5 +1,6 @@
-type BaseResponse<QueryKey extends string, T extends Object> =
-    { [key in QueryKey]: T } & {status: "success"}
+export interface BaseResponse {
+    status: "success" | "error" | "fail";
+}
 
 
-export {BaseResponse};
+

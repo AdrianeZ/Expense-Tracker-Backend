@@ -1,3 +1,8 @@
-type CreateUserResponse = {id: string, token:string, name: string, email: string};
+import {BaseResponse} from "../BaseResponse";
 
-export {CreateUserResponse};
+export interface CreateUserResponse extends BaseResponse {
+    status:"success"
+    user: { id: string, token: string, name: string, email: string}
+}
+
+

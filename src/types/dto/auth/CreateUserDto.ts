@@ -1,4 +1,4 @@
-type CreateUserDto =
+export type CreateUserDto =
     {
         name: string,
         email: string,
@@ -6,4 +6,3 @@ type CreateUserDto =
         passwordConfirm: string
     }
 
-    export {CreateUserDto};

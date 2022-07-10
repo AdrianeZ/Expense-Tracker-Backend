@@ -1,3 +1,7 @@
-type LoginUserResponse = {id: string, token:string};
+import {BaseResponse} from "../BaseResponse";
 
-export {LoginUserResponse};
+export interface LoginUserResponse extends BaseResponse {
+    status: "success",
+    user: { id: string, token: string }
+}
+

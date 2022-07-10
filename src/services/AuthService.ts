@@ -1,13 +1,12 @@
 import {pbkdf2, randomBytes} from "crypto";
 import {promisify} from "util";
 import {sign} from "async-jsonwebtoken";
-import {CreateUserDto} from "../types/dto/auth/CreateUserDto";
+import {CreateUserDto} from "../types";
 import {User} from "../entities/User";
-import {CreateUserResponse} from "../types/responses/auth/CreateUserResponse";
-import {BaseResponse} from "../types/responses/BaseResponse";
+import {CreateUserResponse} from "../types";
 import {AuthError, ValidationError} from "../middlewares/errorMiddleware";
-import {LoginUserDto} from "../types/dto/auth/LoginUserDto";
-import {LoginUserResponse} from "../types/responses/auth/LoginUserResponse";
+import {LoginUserDto} from "../types";
+import {LoginUserResponse} from "../types";
 import {validate} from "class-validator";
 import {validationConfig} from "../config/validation/validationConfig";
 
@@ -20,7 +19,7 @@ interface GeneratedCredentials {
 class AuthService {
 
 
-    async register(createUserDto: CreateUserDto): Promise<BaseResponse<"user", CreateUserResponse>> {
+    async register(createUserDto: CreateUserDto): Promise<CreateUserResponse> {
 
         const {name, password, passwordConfirm, email} = createUserDto
 
@@ -42,10 +41,14 @@ class AuthService {
         await user.save();
 
         const token = await this.signToken(user.id);
-        return {status: "success", user: {id: user.id, name: user.name, email: user.email, token}};
+        return {
+            status: "success",
+            user: {id: user.id, name: user.name, email: user.email, token}
+
+        };
     }
 
-    async login(loginUserDto: LoginUserDto): Promise<BaseResponse<"user", LoginUserResponse>> {
+    async login(loginUserDto: LoginUserDto): Promise<LoginUserResponse> {
         const {email, password} = loginUserDto;
 
         if (!email || !password) {
@@ -62,7 +65,10 @@ class AuthService {
         }
         const token = await this.signToken(user.id);
 
-        return {status: "success", user: {id: user.id, token}};
+        return {
+            status: "success",
+            user: {id: user.id, token: token}
+        }
     }
 
 

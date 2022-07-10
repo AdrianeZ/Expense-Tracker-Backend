@@ -23,9 +23,6 @@ class User extends BaseEntity {
     @Column({length: 64})
     salt: string;
 
-    @Column({nullable: true, default: null})
-    password_changed_at: Date | null
-
     @CreateDateColumn({type: "timestamp"})
     created_at: Date
 

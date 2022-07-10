@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {ErrorResponse} from "../types/responses/ErrorResponse";
+import {ErrorResponse} from "../types";
 
 
 class ValidationError extends Error {
@@ -33,9 +33,9 @@ const errorMiddleware = (error: Error, req: Request, res: Response, next: NextFu
 
 
     if (process.env.NODE_ENV === "development") {
-        res.status(500).json({message: error.message}) ;
+        res.status(500).json({errorMessage: error.message, status:"error"} as ErrorResponse) ;
     } else {
-        res.status(500).json({message: "something went wrong, try again later"});
+        res.status(500).json({errorMessage: "something went wrong, try again later", status:"error"} as ErrorResponse);
     }
 
 }

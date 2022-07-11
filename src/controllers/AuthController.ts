@@ -1,8 +1,8 @@
 import {NextFunction, Request, Response} from "express";
-import {CreateUserDto} from "../types/dto/auth/CreateUserDto";
+import {CreateUserDto} from "../types";
 import {AuthService} from "../services/AuthService";
 import {BindController} from "../types/config/BindController";
-import {LoginUserDto} from "../types/dto/auth/LoginUserDto";
+import {LoginUserDto} from "../types";
 
 class AuthController implements BindController {
 

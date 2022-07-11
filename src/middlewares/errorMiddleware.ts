@@ -32,7 +32,7 @@ const errorMiddleware = (error: Error, req: Request, res: Response, next: NextFu
 
 
 
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "production") {
         res.status(500).json({errorMessage: error.message, status:"error"} as ErrorResponse) ;
     } else {
         res.status(500).json({errorMessage: "something went wrong, try again later", status:"error"} as ErrorResponse);

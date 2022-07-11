@@ -18,7 +18,6 @@ interface GeneratedCredentials {
 
 class AuthService {
 
-
     async register(createUserDto: CreateUserDto): Promise<CreateUserResponse> {
 
         const {name, password, passwordConfirm, email} = createUserDto
@@ -37,7 +36,6 @@ class AuthService {
             throw new ValidationError(`value ${error.value} is invalid for ${error.property}`);
         }
 
-
         await user.save();
 
         const token = await this.signToken(user.id);
@@ -50,6 +48,8 @@ class AuthService {
 
     async login(loginUserDto: LoginUserDto): Promise<LoginUserResponse> {
         const {email, password} = loginUserDto;
+
+        console.log(email,password);
 
         if (!email || !password) {
             throw new ValidationError("make sure you're sending email and password in request body");

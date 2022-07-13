@@ -1,12 +1,22 @@
-import {Column, Entity, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, BaseEntity} from "typeorm";
+import {
+    Column,
+    Entity,
+    CreateDateColumn,
+    UpdateDateColumn,
+    PrimaryGeneratedColumn,
+    BaseEntity,
+    OneToMany
+} from "typeorm";
 import {IsEmail, MinLength, Validate} from "class-validator";
 import {UniqueValidator} from "../config/validation/EmailValidation";
+import {Expense} from "./Expense";
 
 
 @Entity('users')
 class User extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
+
 
     @Column({unique: true, length: 320})
     @Validate(UniqueValidator)
@@ -25,11 +35,14 @@ class User extends BaseEntity {
     @Column({length: 64})
     salt: string;
 
+    @OneToMany(() => Expense, expense => expense.user)
+    expenses: Expense[];
+
     @CreateDateColumn({type: "timestamp"})
-    created_at: Date
+    createdAt: Date;
 
     @UpdateDateColumn({type: "timestamp"})
-    updated_at: Date
+    updatedAt: Date;
 }
 
 

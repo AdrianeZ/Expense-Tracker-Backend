@@ -1,0 +1,6 @@
+class CategoryService
+{
+
+}
+
+export {CategoryService}

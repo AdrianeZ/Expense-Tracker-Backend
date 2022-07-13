@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": ". ./development.env && ts-node src/index.ts",
     "start:dev": ". ./development.env && tsnd src/index.ts",
     "build": "tsc"
   },
@@ -19,6 +19,7 @@
     "express-async-errors": "^3.1.1",
     "express-rate-limit": "^6.4.0",
     "mysql2": "^2.3.3",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.6"
   },
   "devDependencies": {

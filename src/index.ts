@@ -5,6 +5,8 @@ import rateLimit from "express-rate-limit";
 import {errorMiddleware} from "./middlewares/errorMiddleware"
 import {connectToDatabase} from "./database/createConnection";
 import {authRouter} from "./routers/AuthRouter";
+import {expenseRouter} from "./routers/ExpenseRouter";
+import {categoryRouter} from "./routers/CategoryRouter";
 
 const app = express();
 
@@ -19,7 +21,7 @@ app.use(express.json());
 
 connectToDatabase().then(() => console.log("connected to database successfully"));
 
-app.use("/api", authRouter);
+app.use("/api", authRouter, expenseRouter, categoryRouter);
 
 app.use(errorMiddleware);
 

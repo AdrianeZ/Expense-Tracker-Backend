@@ -32,8 +32,10 @@ class AuthService {
         const validationErrors = await validate(user, validationConfig);
 
         if (validationErrors.length > 0) {
+            console.log(validationErrors);
             const [error] = validationErrors;
-            throw new ValidationError(`value ${error.value} is invalid for ${error.property}`);
+            throw new ValidationError(`value ${error.value} is invalid for ${error.property} ${error.constraints.uniqueConstraint ?? ""}`);
+
         }
 
         await user.save();
@@ -67,7 +69,7 @@ class AuthService {
 
         return {
             status: "success",
-            user: {id: user.id, token: token}
+            user: {id: user.id, name:user.name, token: token}
         }
     }
 

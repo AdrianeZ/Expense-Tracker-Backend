@@ -1,5 +1,6 @@
 import {Column, Entity, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, BaseEntity} from "typeorm";
-import {IsEmail, MinLength} from "class-validator";
+import {IsEmail, MinLength, Validate} from "class-validator";
+import {UniqueValidator} from "../config/validation/EmailValidation";
 
 
 @Entity('users')
@@ -8,6 +9,7 @@ class User extends BaseEntity {
     id: string;
 
     @Column({unique: true, length: 320})
+    @Validate(UniqueValidator)
     @IsEmail()
     email: string;
 

@@ -12,6 +12,7 @@ interface Payload {
 const authenticationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     const authorizationHeader = req.header("authorization");
 
+
     if (!authorizationHeader) {
         throw new AuthError("Expected token is invalid, make sure you're sending your jwt in authorization header");
     }

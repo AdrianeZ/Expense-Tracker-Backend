@@ -1,6 +1,7 @@
+import {NextFunction, Request, Response} from "express";
 import {BindController} from "../types/config/BindController";
 import {CategoryService} from "../services/CategoryService";
-import {Category} from "../entities/Category";
+import {GetCategoriesResponse} from "../types/responses/category";
 
 
 class CategoryController implements BindController {
@@ -16,9 +17,9 @@ class CategoryController implements BindController {
         this.getCategories = this.getCategories.bind(this);
     }
 
-    async getCategories(): Promise<Category[]>
-    {
-        return await Category.find();
+    async getCategories(req: Request, res: Response, next: NextFunction): Promise<void> {
+        const categories = await this.categoryService.getCategories();
+        res.status(200).json({status: "success", categories: categories} as GetCategoriesResponse);
     }
 
 }

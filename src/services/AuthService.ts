@@ -9,6 +9,7 @@ import {LoginUserDto} from "../types";
 import {LoginUserResponse} from "../types";
 import {validate} from "class-validator";
 import {validationConfig} from "../config/validation/validationConfig";
+import {handleValidation} from "../helpers/handleValidation";
 
 
 interface GeneratedCredentials {
@@ -29,14 +30,7 @@ class AuthService {
 
         const user = User.create({name, email, password: encryptedPassword, salt});
 
-        const validationErrors = await validate(user, validationConfig);
-
-        if (validationErrors.length > 0) {
-            console.log(validationErrors);
-            const [error] = validationErrors;
-            throw new ValidationError(`value ${error.value} is invalid for ${error.property} ${error.constraints.uniqueConstraint ?? ""}`);
-
-        }
+        handleValidation(await validate(user, validationConfig))
 
         await user.save();
 

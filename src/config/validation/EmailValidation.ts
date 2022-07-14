@@ -11,7 +11,8 @@ class UniqueValidator implements ValidatorConstraintInterface
     }
 
     defaultMessage(validationArguments?: ValidationArguments): string {
-        return `${validationArguments.value} already exists`;
+        if(validationArguments) return `${validationArguments?.value} already exists`;
+        return "value already exists";
     }
 }
 

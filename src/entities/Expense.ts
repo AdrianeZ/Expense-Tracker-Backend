@@ -1,15 +1,16 @@
 import {
     BaseEntity,
-    Column,
-    CreateDateColumn,
+    Column, CreateDateColumn,
     Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
-    UpdateDateColumn
+    JoinColumn, RelationId
 } from "typeorm";
-import {MinLength} from "class-validator";
+import {Min, MinLength} from "class-validator";
 import {User} from "./User";
 import {Category} from "./Category";
+
+
 
 
 @Entity('expenses')
@@ -22,22 +23,25 @@ class Expense extends BaseEntity {
     name: string;
 
     @Column({type: "decimal", precision: 8, scale: 2})
+    @Min(0.01)
     value: number;
 
-    @Column({type: "datetime"})
-    expenseDate: Date;
 
-    @ManyToOne(() => Category, category => category.expenses, {onDelete:"RESTRICT"})
+    @Column({ type: "uuid"})
+    categoryId: string;
+
+
+    @ManyToOne(() => Category, category => category.expenses, {onDelete:"RESTRICT", eager:true})
+    @JoinColumn({name:"categoryId", referencedColumnName:"id"})
     category: Category;
+
+
 
     @ManyToOne(() => User, user => user.expenses, {onDelete: "CASCADE"})
     user: User;
 
     @CreateDateColumn({type: "timestamp"})
     createdAt: Date;
-
-    @UpdateDateColumn({type: "timestamp"})
-    updatedAt: Date;
 
 }
 

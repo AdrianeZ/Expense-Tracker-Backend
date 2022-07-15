@@ -1,6 +1,6 @@
 {
   "name": "expensetrackerbackend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
   "scripts": {

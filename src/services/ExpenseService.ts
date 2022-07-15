@@ -1,4 +1,4 @@
-import {CreateExpenseDto} from "../types/dto/expenses";
+import {CreateExpenseDto, RemoveExpenseDto} from "../types/dto/expenses";
 import {CreateExpenseResponse, GetExpenseResponse} from "../types/responses/expense";
 import {Expense} from "../entities/Expense";
 import {User} from "../entities/User";
@@ -10,9 +10,6 @@ import {validationConfig} from "../config/validation/validationConfig";
 
 class ExpenseService {
     async getExpenses(currentUser: User): Promise<GetExpenseResponse> {
-
-        console.log(currentUser.id);
-
         const repository = Expense.getRepository();
         const expenses = await repository.createQueryBuilder()
             .relation(User, "expenses")
@@ -42,6 +39,10 @@ class ExpenseService {
             status: "success",
             id: newExpense.id
         }
+    }
+
+    async removeExpense(expense: RemoveExpenseDto): Promise<void> {
+        await Expense.delete({id: expense.id});
     }
 }
 

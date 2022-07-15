@@ -1,7 +1,7 @@
 import {BindController} from "../types/config/BindController";
 import {ExpenseService} from "../services/ExpenseService";
 import {NextFunction, Request, Response} from "express";
-import {CreateExpenseDto} from "../types/dto/expenses";
+import {CreateExpenseDto, RemoveExpenseDto} from "../types/dto/expenses";
 
 
 class ExpenseController implements BindController {
@@ -28,6 +28,10 @@ class ExpenseController implements BindController {
         res.status(201).json(response);
     }
 
+    async removeExpense(req: Request, res: Response, next: NextFunction): Promise<void> {
+        const response = await this.expenseService.removeExpense(req.body as RemoveExpenseDto);
+        res.status(204).json(response);
+    }
 }
 
 export {ExpenseController};

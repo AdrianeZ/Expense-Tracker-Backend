@@ -11,8 +11,6 @@ class AuthError extends Error {
 
 const errorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction): void => {
 
-    console.log(error);
-
     if (error instanceof ValidationError) {
         res.status(400).json({status: "fail", errorMessage: error.message} as ErrorResponse);
         return;

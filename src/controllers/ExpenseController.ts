@@ -16,6 +16,7 @@ class ExpenseController implements BindController {
     bind(): void {
         this.getExpenses = this.getExpenses.bind(this);
         this.createExpense = this.createExpense.bind(this);
+        this.removeExpense = this.removeExpense.bind(this);
     }
 
     async getExpenses(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -29,7 +30,8 @@ class ExpenseController implements BindController {
     }
 
     async removeExpense(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const response = await this.expenseService.removeExpense(req.body as RemoveExpenseDto);
+        const {id} = req.params;
+        const response = await this.expenseService.removeExpense({id} as RemoveExpenseDto);
         res.status(204).json(response);
     }
 }

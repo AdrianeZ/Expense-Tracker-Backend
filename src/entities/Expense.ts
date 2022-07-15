@@ -4,9 +4,9 @@ import {
     Entity,
     ManyToOne,
     PrimaryGeneratedColumn,
-    JoinColumn, RelationId
+    JoinColumn
 } from "typeorm";
-import {Min, MinLength} from "class-validator";
+import {IsNotEmpty, IsString, Min, MinLength} from "class-validator";
 import {User} from "./User";
 import {Category} from "./Category";
 
@@ -18,9 +18,13 @@ class Expense extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
+
     @MinLength(3)
+    @IsNotEmpty()
+    @IsString()
     @Column({length: 100})
     name: string;
+
 
     @Column({type: "decimal", precision: 8, scale: 2})
     @Min(0.01)

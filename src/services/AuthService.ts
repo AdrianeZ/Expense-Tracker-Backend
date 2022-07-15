@@ -1,6 +1,6 @@
 import {pbkdf2, randomBytes} from "crypto";
 import {promisify} from "util";
-import {sign} from "async-jsonwebtoken";
+import {sign, decode} from "async-jsonwebtoken";
 import {CreateUserDto} from "../types";
 import {User} from "../entities/User";
 import {CreateUserResponse} from "../types";
@@ -15,6 +15,13 @@ import {handleValidation} from "../helpers/handleValidation";
 interface GeneratedCredentials {
     encryptedPassword: string,
     salt: string
+}
+
+interface tokenPayload
+{
+    sub:string;
+    iat:number;
+    exp:number;
 }
 
 class AuthService {
@@ -35,17 +42,18 @@ class AuthService {
         await user.save();
 
         const token = await this.signToken(user.id);
+
+        const tokenPayload =  await  decode(token) as tokenPayload;
+
         return {
             status: "success",
-            user: {id: user.id, name: user.name, email: user.email, token}
+            user: {id: user.id, name: user.name, email: user.email, token, expires: tokenPayload.exp}
 
         };
     }
 
     async login(loginUserDto: LoginUserDto): Promise<LoginUserResponse> {
         const {email, password} = loginUserDto;
-
-        console.log(email,password);
 
         if (!email || !password) {
             throw new ValidationError("make sure you're sending email and password in request body");
@@ -56,14 +64,18 @@ class AuthService {
             throw new AuthError(`user with email: ${email} does not exists`);
         }
         const isValid = await this.comparePasswords(password, user.password, user.salt);
+
         if (!isValid) {
             throw new AuthError("email or password are incorrect");
         }
         const token = await this.signToken(user.id);
 
+        const tokenPayload = decode(token) as tokenPayload;
+
+
         return {
             status: "success",
-            user: {id: user.id, name:user.name, token: token}
+            user: {id: user.id, name:user.name, token,  expires: tokenPayload.exp}
         }
     }
 
@@ -90,7 +102,6 @@ class AuthService {
         if (err) {
             throw new AuthError("Something went wrong with authentication process");
         }
-
         return token;
 
     }

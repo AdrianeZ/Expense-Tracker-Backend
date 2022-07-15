@@ -14,6 +14,7 @@ import {Expense} from "./Expense";
 
 @Entity('users')
 class User extends BaseEntity {
+
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
